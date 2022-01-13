@@ -3,10 +3,22 @@ var tasksToDoEl = document.querySelector("#tasks-to-do");
 
 
 // the module has you create this function. It's the same function as the one I created.
-var createTaskHandler = function() {
+var taskFormHandler = function() {
     event.preventDefault();
     var taskNameInput = document.querySelector("input[name='task-name']").value;
     var taskTypeInput = document.querySelector("select[name='task-type']").value;
+    
+    // package up data as an object
+    var taskDataObj = {
+        name: taskNameInput,
+        type: taskTypeInput
+    };
+
+    // send as argument to createTaskEl() function
+    createTaskEl(taskDataObj);
+}
+
+var createTaskEl = function (taskDataObj) {
     // create list item
     var listItemEl = document.createElement("li");
     listItemEl.className = "task-item";
@@ -15,7 +27,7 @@ var createTaskHandler = function() {
     // give it a class name
     taskInfoEl.className = "task-info";
     // add HTML content to div
-    taskInfoEl.innerHTML = "<h3 class='task-name'>" + taskNameInput + "</h3><span class='task-type'>" + taskTypeInput + "</span>";
+    taskInfoEl.innerHTML = "<h3 class='task-name'>" + taskDataObj.name + "</h3><span class='task-type'>" + taskDataObj.type  + "</span>";
 
     listItemEl.appendChild(taskInfoEl);
 
@@ -23,15 +35,4 @@ var createTaskHandler = function() {
     tasksToDoEl.appendChild(listItemEl);
 }
 
-formEl.addEventListener("submit", createTaskHandler);
-
-// this function is called by the button's event listener method on clicking.
-// same response as createTaskHandler() given in Module 4
-/* function addTaskItem() {
-    var listItemEl = document.createElement("li");
-    listItemEl.textContent = "This is a new task!";
-    listItemEl.className = "task-item";
-    // now finally add the task item to the ul element in the html file
-    tasksToDoEl.appendChild(listItemEl);
-}; */
-
+formEl.addEventListener("submit", taskFormHandler);
