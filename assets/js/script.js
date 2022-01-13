@@ -1,6 +1,7 @@
 var formEl = document.querySelector("#task-form");
 var tasksToDoEl = document.querySelector("#tasks-to-do");
 
+
 // the module has you create this function. It's the same function as the one I created.
 var createTaskHandler = function() {
     event.preventDefault();
