@@ -1,7 +1,6 @@
 var buttonEl = document.querySelector("#save-task");
 var tasksToDoEl = document.querySelector("#tasks-to-do");
 
-
 console.log(buttonEl);
 
 // I can call the addTaskItem() function before it's declared because of how I declare the function,
