@@ -5,7 +5,6 @@ var tasksCompletedEl = document.querySelector("#tasks-completed");
 var taskIdCounter = 0;
 var pageContentEl = document.querySelector("#page-content");
 
-
 // the module has you create this function. It's the same function as the one I created.
 var taskFormHandler = function() {
     event.preventDefault();
