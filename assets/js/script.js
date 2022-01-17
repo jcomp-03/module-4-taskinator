@@ -1,9 +1,12 @@
+var taskIdCounter = 0;
+
 var formEl = document.querySelector("#task-form");
 var tasksToDoEl = document.querySelector("#tasks-to-do");
 var tasksInProgressEl = document.querySelector("#tasks-in-progress");
 var tasksCompletedEl = document.querySelector("#tasks-completed");
-var taskIdCounter = 0;
 var pageContentEl = document.querySelector("#page-content");
+
+// create an array to hold tasks for saving
 var tasks = [];
 
 // the module has you create this function. It's the same function as the one I created.
@@ -19,7 +22,9 @@ var taskFormHandler = function() {
         return false;
     }
     
-    formEl.reset();
+    // reset form fields for next task to be entered
+    document.querySelector("input[name='task-name']").value = "";
+    document.querySelector("select[name='task-type']").selectedIndex = 0;
 
     var isEdit = formEl.hasAttribute("data-task-id");
     
@@ -62,6 +67,23 @@ var createTaskEl = function (taskDataObj) {
     // add entire list item to list
     tasksToDoEl.appendChild(listItemEl);
     
+    switch (taskDataObj.status) {
+        case "to do":
+          taskActionsEl.querySelector("select[name='status-change']").selectedIndex = 0;
+          tasksToDoEl.append(listItemEl);
+          break;
+        case "in progress":
+          taskActionsEl.querySelector("select[name='status-change']").selectedIndex = 1;
+          tasksInProgressEl.append(listItemEl);
+          break;
+        case "completed":
+          taskActionsEl.querySelector("select[name='status-change']").selectedIndex = 2;
+          tasksCompletedEl.append(listItemEl);
+          break;
+        default:
+          console.log("Something went wrong!");
+    }
+
     // add id to taskDataObj and push the object to array tasks
     taskDataObj.id = taskIdCounter;
     tasks.push(taskDataObj);
@@ -224,6 +246,7 @@ var saveTasks = function() {
 //Converts tasks from the string format back into an array of objects.
 //Iterates through a tasks array and creates task elements on the page from it.
 var loadTasks = function() {
+    // debugger;
     var savedTasks = localStorage.getItem("tasks");
     if (savedTasks === null) {
         return false;
