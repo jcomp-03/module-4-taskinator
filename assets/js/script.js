@@ -6,10 +6,9 @@ var tasksInProgressEl = document.querySelector("#tasks-in-progress");
 var tasksCompletedEl = document.querySelector("#tasks-completed");
 var pageContentEl = document.querySelector("#page-content");
 
-// create an array to hold tasks for saving
+// create array to hold tasks for saving
 var tasks = [];
 
-// the module has you create this function. It's the same function as the one I created.
 var taskFormHandler = function() {
     event.preventDefault();
     
@@ -64,9 +63,6 @@ var createTaskEl = function (taskDataObj) {
     var taskActionsEl = createTaskActions(taskIdCounter);
     listItemEl.appendChild(taskActionsEl);
 
-    // add entire list item to list
-    tasksToDoEl.appendChild(listItemEl);
-    
     switch (taskDataObj.status) {
         case "to do":
           taskActionsEl.querySelector("select[name='status-change']").selectedIndex = 0;
@@ -83,8 +79,8 @@ var createTaskEl = function (taskDataObj) {
         default:
           console.log("Something went wrong!");
     }
-
-    // add id to taskDataObj and push the object to array tasks
+  
+    // save task as an object with name, type, status, and id properties then push it into tasks array
     taskDataObj.id = taskIdCounter;
     tasks.push(taskDataObj);
 
@@ -125,9 +121,9 @@ var createTaskActions = function(taskId) {
     for (var i = 0; i < statusChoices.length; i++) {
         // create option element
         var statusOptionEl = document.createElement("option");
-        statusOptionEl.textContent = statusChoices[i];
         statusOptionEl.setAttribute("value", statusChoices[i]);
-      
+        statusOptionEl.textContent = statusChoices[i];
+        
         // append to select
         statusSelectEl.appendChild(statusOptionEl);
     }
@@ -249,9 +245,10 @@ var loadTasks = function() {
     debugger;
     var savedTasks = localStorage.getItem("tasks");
     // if there are not tasks stored locally, set tasks to an empty array and return out of the function
-    if (savedTasks === null) {
+    if (!savedTasks) {
         return false;
     }
+    
     console.log("Saved tasks found!");
 
     // parse savedTasks into an array of objects
@@ -262,7 +259,7 @@ var loadTasks = function() {
     // pass each task object into the `createTaskEl()` function
     createTaskEl(savedTasks[i]);
   }
-}
+};
 
 // create a new task
 formEl.addEventListener("submit", taskFormHandler);
